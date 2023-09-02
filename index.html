@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/Saul.webp" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Termometer</title>
+    <script type="module" src="/src/main.ts" defer></script>
+    <link rel="stylesheet" href="./src/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <div class="row">
+        <div class="canvas__wrapper">
+          <canvas id="three"></canvas>
+        </div>
+        <div class="canvas__wrapper">
+          <canvas id="three2"></canvas>
+        </div>
+
+        <div class="content">
+          <h2>Saul Goodman temperature & humidity AB</h2>
+          <div class="data">
+            <div class="temperature">
+              <i class="fas fa-thermometer-half" style="color: #059e8a"></i>
+              <p>%TEMPERATURE%</p>
+              <sup class="units">&deg;C</sup>
+             
+            </div>
+            <div class="humidity">
+              <i class="fas fa-tint" style="color: #00add6"></i>
+              <p>%HUMIDITY%</p>
+              <sup class="units">%</sup>
+            </div>
+          </div>
+          <select name="shape__select" id="">
+            <option value="">Choose a shape</option>
+            <option value="sphere">Box</option>
+            <option value="">Capsule</option>
+            <option value="">Cone</option>
+            <option value="">Cylinder</option>
+            <option value="">Dodecahedron</option>
+            <option value="">Extrude</option>
+            <option value="">Icosahedron</option>
+            <option value="">Lathe</option>
+            <option value="">Octahedron</option>
+            <option value="">Sphere</option>
+            <option value="">Tetrahedron</option>
+            <option value="">Torus</option>
+            <option value="">Torus-knot</option>
+          </select>
+          <div class="slidecontainer">
+            <h4 class="slider__header--main">Saul rotation</h4>
+            <div class="slider__container">
+              <h3 class="slider__header">x</h3>
+              <input
+                type="range"
+                min="-100"
+                max="100"
+                value="20"
+                class="slider x"
+                id="x"
+              />
+            </div>
+            <div class="slider__container">
+              <h3 class="slider__header">y</h3>
+              <input
+                type="range"
+                min="-100"
+                max="100"
+                value="-20"
+                class="slider y"
+                id="y"
+              />
+            </div>
+            <div class="slider__container">
+              <h3 class="slider__header">z</h3>
+              <input
+                type="range"
+                min="-100"
+                max="100"
+                value="0"
+                class="slider z"
+                id="z"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
