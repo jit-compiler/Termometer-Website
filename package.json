@@ -13,6 +13,7 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
-    "three": "^0.155.0"
+    "three": "^0.155.0",
+    "three-gltf-loader": "^1.111.0"
   }
 }

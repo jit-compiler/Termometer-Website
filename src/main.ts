@@ -8,16 +8,15 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-const canvas = document.getElementById("three");
-const canvas2 = document.getElementById("three2");
+const canvas = document.getElementById("three") as HTMLCanvasElement;
+const canvas2 = document.getElementById("three2") as HTMLCanvasElement;
 const renderer = new THREE.WebGLRenderer({ canvas: canvas });
 const renderer2 = new THREE.WebGLRenderer({ canvas: canvas2 });
 
 // User inputs
-
-let rotationXElement = document.getElementById("x");
-let rotationYElement = document.getElementById("y");
-let rotationZElement = document.getElementById("z");
+let rotationXElement = document.getElementById("x") as HTMLInputElement;
+let rotationYElement = document.getElementById("y") as HTMLInputElement;
+let rotationZElement = document.getElementById("z") as HTMLInputElement;
 
 let rotationXValue = rotationXElement.value;
 let rotationYValue = rotationYElement.value;
@@ -41,7 +40,7 @@ renderer2.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 document.body.appendChild(renderer2.domElement);
 
-const geometry = new THREE.BoxGeometry(14, 14, 14);
+let geometry = new THREE.BoxGeometry(14, 14, 14);
 const material = new THREE.MeshBasicMaterial({
   map: new THREE.TextureLoader().load(
     "./Saul.webp",
@@ -57,7 +56,7 @@ const material = new THREE.MeshBasicMaterial({
 const box = new THREE.Mesh(geometry, material);
 scene.add(box);
 
-const geometry2 = new THREE.BoxGeometry(14, 14, 14);
+let geometry2 = new THREE.BoxGeometry(14, 14, 14);
 const material2 = new THREE.MeshBasicMaterial({
   map: new THREE.TextureLoader().load(
     "./Saul.webp",
@@ -82,12 +81,12 @@ renderer2.setSize(600, 300);
 
 function animate() {
   requestAnimationFrame(animate);
-  box.rotation.y -= rotationYValue / 1000;
-  box.rotation.x -= rotationXValue / 1000;
-  box.rotation.z += rotationZValue / 1000;
-  box2.rotation.y += rotationYValue / 1000;
-  box2.rotation.x -= rotationXValue / 1000;
-  box2.rotation.z -= rotationZValue / 1000;
+  box.rotation.y -= parseFloat(rotationYValue) / 1000;
+  box.rotation.x -= parseFloat(rotationXValue) / 1000;
+  box.rotation.z += parseFloat(rotationZValue) / 1000;
+  box2.rotation.y += parseFloat(rotationYValue) / 1000;
+  box2.rotation.x -= parseFloat(rotationXValue) / 1000;
+  box2.rotation.z -= parseFloat(rotationZValue) / 1000;
 
   renderer.render(scene, camera);
   renderer2.render(scene2, camera); // Render box2 on the new renderer
@@ -127,3 +126,49 @@ function onWindowResize() {
   // Update the camera's projection matrix
   camera.updateProjectionMatrix();
 }
+const selectElement = document.querySelector(`select[name="shape__select"]`) as HTMLSelectElement;
+
+const points = [];
+for (let i = 0; i < 10; i++) {
+  points.push(new THREE.Vector2(Math.sin(i * 0.2) * 10 + 5, (i - 5) * 2));
+}
+
+selectElement.addEventListener("change", (event) => {
+  let selectedShape = selectElement.value;
+  console.log(selectedShape);
+  let newGeometry;
+  switch (selectedShape) {
+    case "box":
+      newGeometry = new THREE.BoxGeometry(14, 14, 14);
+      break;
+    case "capsule":
+      newGeometry = new THREE.CapsuleGeometry(6, 6, 24, 48);
+      break;
+    case "cone":
+      newGeometry = new THREE.ConeGeometry(5, 20, 32);
+      break;
+    case "cylinder":
+      newGeometry = new THREE.CylinderGeometry(5, 5, 20, 32);
+      break;
+    case "sphere":
+      newGeometry = new THREE.SphereGeometry(8, 100, 100);
+      break;
+    case "torus":
+      newGeometry = new THREE.TorusGeometry(8, 3, 16, 100);
+      break;
+    case "torusknot":
+      newGeometry = new THREE.TorusKnotGeometry(6, 2, 100, 16);
+      break;
+      default:
+        console.log("Unknown shape selected");
+        return;
+    }
+  
+    // Replace the geometry in the scene
+    box.geometry.dispose(); // Dispose of the old geometry
+    box.geometry = newGeometry; // Assign the new geometry
+  
+    // Replace the geometry in scene2
+    box2.geometry.dispose(); // Dispose of the old geometry
+    box2.geometry = newGeometry; // Assign the new geometry
+  });
